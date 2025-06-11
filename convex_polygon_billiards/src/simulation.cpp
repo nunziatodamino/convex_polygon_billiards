@@ -1,13 +1,13 @@
 #include <raylib.h>
+#include <iostream>
 #include "polygon.cpp"
 #include "particle.cpp"
-#include <iostream>
 
-const int screenWidth = 800;
-const int screenHeight = 600;
 
 struct simulationParam
 {
+  const int screenWidth = 800;
+  const int screenHeight = 600;
   int nVertices;
   int nParticles;
   const Vector2 center{screenWidth / 2.0f, screenHeight / 2.0f};
@@ -22,6 +22,8 @@ struct simulationParam
 
 void initWindow()
 {
+  const int screenWidth = 800;
+  const int screenHeight = 600;
   InitWindow(screenWidth, screenHeight, "Convex Polygon Billiards");
   SetTargetFPS(60);
 }
@@ -41,6 +43,7 @@ void particlesInit(float nParticles, Vector2 center, const float apothem, std::v
     Particle particle(center, apothem);
     particles.push_back(particle);
   }
+  particleSystemInit(particles, center, apothem);
 }
 
 void drawPolygon(int nVertices, std::vector<Vector2>& vertices)
@@ -105,12 +108,12 @@ int userAskNumber(char* text)
 void simulation()
 {
   simulationParam sysParam{};
-  sysParam.nVertices = userAskNumber("Enter number of vertices (Press ENTER to confirm):");
+  sysParam.nVertices = userAskNumber("Enter number of vertices (3-20) (Press ENTER to confirm):");
   Polygon polygon(sysParam.center, sysParam.nVertices, sysParam.polygon_radius);
   std::vector<Vector2> vertices{polygon.getPolygonVertices()};
   std::vector<Particle> particles{};
   sysParam.apothemEval();
-  sysParam.nParticles = userAskNumber("Enter number of particles (Press ENTER to confirm):");
+  sysParam.nParticles = userAskNumber("Enter number of particles (1-200) (Press ENTER to confirm):");
   particlesInit(sysParam.nParticles, sysParam.center, sysParam.apothem, particles);
   
   while (!WindowShouldClose())
