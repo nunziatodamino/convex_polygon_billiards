@@ -1,0 +1,3 @@
+/home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/build/CMakeFiles/convex_billiard.dir
+/home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/build/CMakeFiles/edit_cache.dir
+/home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/build/CMakeFiles/rebuild_cache.dir

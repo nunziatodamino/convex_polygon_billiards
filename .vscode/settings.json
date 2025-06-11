@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "cmath": "cpp",
+    "random": "cpp"
+  },
+  "cmake.sourceDirectory": "/home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards"
+}
