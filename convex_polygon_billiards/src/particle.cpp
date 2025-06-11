@@ -13,9 +13,9 @@ class Particle
   public:
     Particle(Vector2 center, double apothem)
     { 
-      setPosition(center, apothem);
-      setVelocity();
-      setRadius();
+      randPosition(center, apothem);
+      randVelocity();
+      randRadius();
     };
     ~Particle()
     { 
@@ -25,7 +25,7 @@ class Particle
     Vector2 getVelocity() const {return m_velocities;}
     float   getRadius()   const {return m_radius;}
     
-    void setPosition(Vector2 center, double apothem)
+    void randPosition(Vector2 center, double apothem)
     {       
       m_coordinates.x = center.x + apothem;
       m_coordinates.y = center.y + apothem;
@@ -35,18 +35,23 @@ class Particle
         m_coordinates.y = center.y + m_rng.getRNGinRangeDouble(-apothem,+apothem);
       }
     }
-    void setVelocity() 
+    void randVelocity() 
     {
       m_velocities.x = m_rng.getRNGinRangeDouble(-m_limit_velocity,+m_limit_velocity);
       m_velocities.y = m_rng.getRNGinRangeDouble(-m_limit_velocity,+m_limit_velocity);
     }
-    void setRadius() {m_radius = m_rng.getRNGinRangeDouble(2.0f, 6.0f);}
+    void randRadius() {m_radius = m_rng.getRNGinRangeDouble(4.0f, 6.0f);}
     
-    void update(float dt, std::vector<Vector2>& vertices )
+    void setPosition(Vector2 position){m_coordinates = position;}
+    void setVelocity(Vector2 velocity){m_velocities = velocity;}
+
+
+    void update(float dt, std::vector<Vector2>& vertices , std::vector<Particle>& particles)
     {
       bool collided = false;
       edgeCollision(collided, dt, vertices);
       vertexCollision(collided, dt, vertices);
+      particlesElasticCollision(collided, dt, particles);
       m_coordinates = Vector2Add(m_coordinates, Vector2Scale(m_velocities, dt));
     } 
 
@@ -109,10 +114,51 @@ class Particle
         }  
       } 
     }
-
+    
+    void particlesElasticCollision(bool& collided, float dt, std::vector<Particle>& particles)
+    {
+      if (!collided)
+      {
+        size_t n{particles.size()};
+        for (size_t i = 0; i < n; ++i)
+        {
+          Vector2 otherParticlePos = particles[i].getPosition();
+          float otherRadius = particles[i].getRadius();
+          float distance = Vector2Distance(m_coordinates, otherParticlePos);
+          float minDistance = m_radius + otherRadius;
+          if (m_coordinates == otherParticlePos) {continue;}
+          if (distance < minDistance)
+          {
+            Vector2 collisionDirection = Vector2Normalize(Vector2Subtract(otherParticlePos, m_coordinates));
+            // Overlap resolution
+            float overlap = minDistance - distance;
+            Vector2 separation = Vector2Scale(collisionDirection, overlap * 0.5f);
+            m_coordinates = Vector2Subtract(m_coordinates, separation);
+            particles[i].setPosition(Vector2Add(otherParticlePos, separation));
+            // Velocity rescaling
+            Vector2 otherParticleVel = particles[i].getVelocity();
+            float otherParticleRad = particles[i].getRadius();
+            float mass1 = m_radius * m_radius;
+            float mass2 = otherParticleRad * otherParticleRad;
+            Vector2 relativeVel = Vector2Subtract(otherParticleVel, m_velocities);
+            float velAlongNormal = Vector2DotProduct(relativeVel, collisionDirection);    
+            if (velAlongNormal > 0) {continue;}
+            float restitution = 1.0f;
+            float impulse = -(1.0f + restitution) * velAlongNormal;
+            impulse /= (1.0f / mass1 + 1.0f / mass2);
+            Vector2 impulseVector = Vector2Scale(collisionDirection, impulse);
+            Vector2 newVel1 = Vector2Subtract(m_velocities, Vector2Scale(impulseVector, 1.0f / mass1));
+            Vector2 newVel2 = Vector2Add(otherParticleVel, Vector2Scale(impulseVector, 1.0f / mass2));
+            m_velocities=newVel1;      
+            particles[i].setVelocity(newVel2);
+            collided = true;
+          }
+        }
+      }
+    }
 };
 
-void particleSystemInit (std::vector<Particle> particles, Vector2 center, double apothem)
+void particleSystemInit (std::vector<Particle>& particles, Vector2 center, double apothem)
 {
   size_t n{particles.size()};
   for (size_t i = 0; i < n; ++i)
@@ -123,7 +169,7 @@ void particleSystemInit (std::vector<Particle> particles, Vector2 center, double
     float r2 = particles[(i+1) % n].getRadius();
     while (Vector2Distance(x1, x2) < (r1+r2))
     {
-      particles[i].setPosition(center, apothem);
+      particles[i].randPosition(center, apothem);
     }
   }  
 }

@@ -28,14 +28,6 @@ void initWindow()
   SetTargetFPS(60);
 }
 
-int getNumber(const char *string)
-{
-  std::cout << string;
-  int value;
-  std::cin >> value;
-  return value;
-}
-
 void particlesInit(float nParticles, Vector2 center, const float apothem, std::vector<Particle>& particles)
 {
   for (int j = 0; j < nParticles; ++j)
@@ -56,17 +48,17 @@ void drawPolygon(int nVertices, std::vector<Vector2>& vertices)
 
 void drawParticles (std::vector<Particle>& particles, int nParticles, std::vector<Vector2> vertices)
 {
-  float dt = GetFrameTime();
+  const float dt = 1.0f/120.0f;
   for (int j = 0; j < nParticles; ++j)
   {
-    particles[j].update(dt, vertices);
+    particles[j].update(dt, vertices, particles);
     Vector2 coordinates = particles[j].getPosition();
     float particles_radius = particles[j].getRadius();
     DrawCircleV(coordinates, particles_radius, RED);
   }
 }
 
-int userAskNumber(char* text) 
+int userAskNumber(const char* text) 
 {
   std::string input = "";
   int userNumber = 0;
