@@ -10,9 +10,9 @@ CMakeFiles/convex_billiard.dir/src/main.cpp.o
 
 CMakeFiles/convex_billiard.dir/src/simulation.cpp.o
  /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/simulation.cpp
- /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/particle.cpp
- /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/polygon.cpp
- /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/rng.cpp
+ /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/particle.hpp
+ /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/polygon.hpp
+ /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/rng.hpp
  /usr/include/alloca.h
  /usr/include/asm-generic/bitsperlong.h
  /usr/include/asm-generic/errno-base.h

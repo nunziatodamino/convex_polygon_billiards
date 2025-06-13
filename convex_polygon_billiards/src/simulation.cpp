@@ -1,7 +1,7 @@
 #include <raylib.h>
 #include <iostream>
-#include "polygon.cpp"
-#include "particle.cpp"
+#include "polygon.hpp"
+#include "particle.hpp"
 
 
 struct simulationParam
@@ -25,7 +25,6 @@ void initWindow()
   const int screenWidth = 800;
   const int screenHeight = 600;
   InitWindow(screenWidth, screenHeight, "Convex Polygon Billiards");
-  SetTargetFPS(60);
 }
 
 void particlesInit(float nParticles, Vector2 center, const float apothem, std::vector<Particle>& particles)
@@ -48,21 +47,27 @@ void drawPolygon(int nVertices, std::vector<Vector2>& vertices)
 
 void drawParticles (std::vector<Particle>& particles, int nParticles, std::vector<Vector2> vertices)
 {
-  const float dt = 1.0f/120.0f;
+  static float lastTime = 0.0f;
+  float currentTime = GetTime();  
+  float deltaTime = currentTime - lastTime;
+  lastTime = currentTime;
+  deltaTime = std::min(deltaTime, 1.0f/100.0f);
+  
   for (int j = 0; j < nParticles; ++j)
   {
-    particles[j].update(dt, vertices, particles);
+    particles[j].update(deltaTime, vertices, particles);
     Vector2 coordinates = particles[j].getPosition();
     float particles_radius = particles[j].getRadius();
     DrawCircleV(coordinates, particles_radius, RED);
   }
 }
 
-int userAskNumber(const char* text) 
+int userAskNumber(const char* text, int min, int max) 
 {
   std::string input = "";
   int userNumber = 0;
   bool inputDone = false;
+  int backspace = 8;
 
   while (!inputDone && !WindowShouldClose()) {
       BeginDrawing();
@@ -75,7 +80,7 @@ int userAskNumber(const char* text)
           {
             input += (char)key;
           } 
-          else if (key == KEY_BACKSPACE && !input.empty()) 
+          else if (key == backspace && !input.empty()) 
           {
             input.pop_back();
           }
@@ -87,12 +92,12 @@ int userAskNumber(const char* text)
         inputDone = true;
       }
 
-      // Draw input UI
       DrawText(text, 100, 100, 20, DARKGRAY);
       DrawText(input.c_str(), 100, 140, 30, MAROON);
 
       EndDrawing();
-    }
+    
+     }
 
     return userNumber;
 }
@@ -100,12 +105,12 @@ int userAskNumber(const char* text)
 void simulation()
 {
   simulationParam sysParam{};
-  sysParam.nVertices = userAskNumber("Enter number of vertices (3-20) (Press ENTER to confirm):");
+  sysParam.nVertices = userAskNumber("Enter number of vertices (3-20) (Press ENTER to confirm):", 3, 20);
   Polygon polygon(sysParam.center, sysParam.nVertices, sysParam.polygon_radius);
   std::vector<Vector2> vertices{polygon.getPolygonVertices()};
   std::vector<Particle> particles{};
   sysParam.apothemEval();
-  sysParam.nParticles = userAskNumber("Enter number of particles (1-200) (Press ENTER to confirm):");
+  sysParam.nParticles = userAskNumber("Enter number of particles (1-200) (Press ENTER to confirm):", 1, 200);
   particlesInit(sysParam.nParticles, sysParam.center, sysParam.apothem, particles);
   
   while (!WindowShouldClose())

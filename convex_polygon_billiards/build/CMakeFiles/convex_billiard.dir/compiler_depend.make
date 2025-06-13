@@ -8,9 +8,9 @@ CMakeFiles/convex_billiard.dir/src/main.cpp.o: /home/nunziato-damino/Documents/G
   /usr/local/include/raylib.h
 
 CMakeFiles/convex_billiard.dir/src/simulation.cpp.o: /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/simulation.cpp \
-  /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/particle.cpp \
-  /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/polygon.cpp \
-  /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/rng.cpp \
+  /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/particle.hpp \
+  /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/polygon.hpp \
+  /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/rng.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -290,8 +290,6 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 
 /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o:
 
-/usr/lib/x86_64-linux-gnu/libgcc_s.so.1:
-
 /usr/lib/x86_64-linux-gnu/libc.so:
 
 /usr/lib/x86_64-linux-gnu/crti.o:
@@ -348,6 +346,12 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 
 /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
 
+/usr/include/c++/14/bits/streambuf.tcc:
+
+/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
+
+/lib64/ld-linux-x86-64.so.2:
+
 /usr/include/c++/14/ext/type_traits.h:
 
 /usr/include/c++/14/ext/string_conversions.h:
@@ -357,6 +361,8 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 /usr/include/c++/14/bits/stl_iterator_base_funcs.h:
 
 /usr/include/c++/14/ext/alloc_traits.h:
+
+/usr/include/c++/14/debug/assertions.h:
 
 /usr/include/c++/14/cmath:
 
@@ -376,8 +382,6 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 
 /usr/include/c++/14/vector:
 
-/usr/include/c++/14/bits/streambuf_iterator.h:
-
 /usr/include/c++/14/bits/basic_string.tcc:
 
 /usr/include/c++/14/bits/stl_vector.h:
@@ -385,6 +389,8 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 /usr/include/c++/14/bits/new_allocator.h:
 
 /usr/include/c++/14/bits/stl_bvector.h:
+
+/home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/rng.hpp:
 
 /usr/include/c++/14/bits/stl_uninitialized.h:
 
@@ -422,11 +428,7 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 
 /usr/include/x86_64-linux-gnu/asm/posix_types_64.h:
 
-/usr/include/c++/14/bits/streambuf.tcc:
-
-/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
-
-/lib64/ld-linux-x86-64.so.2:
+/usr/include/c++/14/bits/range_access.h:
 
 /usr/include/c++/14/bits/charconv.h:
 
@@ -435,6 +437,10 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 /usr/include/c++/14/bits/allocator.h:
 
 /usr/include/c++/14/bits/basic_ios.h:
+
+/usr/lib/x86_64-linux-gnu/libgcc_s.so.1:
+
+/home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/polygon.hpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/libgcc_s.so:
 
@@ -464,6 +470,12 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 
 /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/main.cpp:
 
+/usr/include/c++/14/bits/ptr_traits.h:
+
+/usr/include/alloca.h:
+
+/usr/include/c++/14/bits/stringfwd.h:
+
 /usr/include/c++/14/cstddef:
 
 /usr/include/c++/14/bits/random.h:
@@ -472,17 +484,15 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 
 /lib/x86_64-linux-gnu/libm.so.6:
 
-/home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/polygon.cpp:
+/usr/include/c++/14/bits/cpp_type_traits.h:
+
+/usr/include/x86_64-linux-gnu/bits/timesize.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
 /usr/include/c++/14/tr1/gamma.tcc:
 
-/usr/include/c++/14/bits/range_access.h:
-
-/usr/include/alloca.h:
-
-/usr/include/c++/14/bits/ptr_traits.h:
+/usr/include/c++/14/bits/streambuf_iterator.h:
 
 /usr/include/c++/14/bits/locale_facets.h:
 
@@ -494,12 +504,6 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 
 /usr/local/include/raylib.h:
 
-/usr/include/c++/14/bits/cpp_type_traits.h:
-
-/usr/include/x86_64-linux-gnu/bits/timesize.h:
-
-/home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/rng.cpp:
-
 /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
 
 /usr/include/c++/14/pstl/execution_defs.h:
@@ -509,8 +513,6 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 /usr/lib/gcc/x86_64-linux-gnu/14/include/stdarg.h:
 
 /usr/include/asm-generic/bitsperlong.h:
-
-/usr/include/c++/14/debug/assertions.h:
 
 /usr/include/c++/14/tr1/exp_integral.tcc:
 
@@ -522,6 +524,8 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 
 /usr/include/c++/14/bits/exception.h:
 
+/home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/particle.hpp:
+
 /usr/include/c++/14/bits/char_traits.h:
 
 /usr/include/x86_64-linux-gnu/asm/posix_types.h:
@@ -529,8 +533,6 @@ convex_billiard: /lib/x86_64-linux-gnu/libc.so.6 \
 /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/simulation.hpp:
 
 /usr/include/c++/14/ext/atomicity.h:
-
-/home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/particle.cpp:
 
 /usr/include/c++/14/limits:
 
@@ -575,8 +577,6 @@ CMakeFiles/convex_billiard.dir/src/main.cpp.o:
 /usr/include/c++/14/bits/ios_base.h:
 
 /usr/include/c++/14/bits/istream.tcc:
-
-/usr/include/c++/14/bits/stringfwd.h:
 
 /usr/include/c++/14/bits/exception_ptr.h:
 

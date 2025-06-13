@@ -1,5 +1,6 @@
+#pragma once
 #include <raylib.h>
-#include "rng.cpp"
+#include "rng.hpp"
 #include "raymath.h"
 
 class Particle
@@ -24,6 +25,9 @@ class Particle
     Vector2 getPosition() const {return m_coordinates;}
     Vector2 getVelocity() const {return m_velocities;}
     float   getRadius()   const {return m_radius;}
+    void setPosition(Vector2 position) {m_coordinates = position;}
+    void setVelocity(Vector2 velocity) {m_velocities = velocity;}
+    void setRadius(float radius) {m_radius = radius;}
     
     void randPosition(Vector2 center, double apothem)
     {       
@@ -40,20 +44,56 @@ class Particle
       m_velocities.x = m_rng.getRNGinRangeDouble(-m_limit_velocity,+m_limit_velocity);
       m_velocities.y = m_rng.getRNGinRangeDouble(-m_limit_velocity,+m_limit_velocity);
     }
-    void randRadius() {m_radius = m_rng.getRNGinRangeDouble(4.0f, 6.0f);}
+    void randRadius() {m_radius = m_rng.getRNGinRangeDouble(2.0f, 6.0f);}
     
-    void setPosition(Vector2 position){m_coordinates = position;}
-    void setVelocity(Vector2 velocity){m_velocities = velocity;}
-
-
     void update(float dt, std::vector<Vector2>& vertices , std::vector<Particle>& particles)
     {
       bool collided = false;
-      edgeCollision(collided, dt, vertices);
+      //edgeCollision(collided, dt, vertices);
+      edgeCollisionWithRadius(collided, dt, vertices);
       vertexCollision(collided, dt, vertices);
       particlesElasticCollision(collided, dt, particles);
       m_coordinates = Vector2Add(m_coordinates, Vector2Scale(m_velocities, dt));
     } 
+
+    float PointToLineDistance(Vector2 point, Vector2 lineStart, Vector2 lineEnd, float& t_collision)
+    {
+    Vector2 lineVec = Vector2Subtract(lineEnd, lineStart);
+    Vector2 pointVec = Vector2Subtract(point, lineStart);
+    float lineLengthSq = Vector2LengthSqr(lineVec);
+    if (lineLengthSq == 0.0f){return Vector2Distance(point, lineStart);}
+    t_collision = Vector2DotProduct(pointVec, lineVec) / lineLengthSq;
+    t_collision = std::max(0.0f, std::min(1.0f, t_collision));
+    Vector2 closestPoint = Vector2Add(lineStart, Vector2Scale(lineVec, t_collision));
+    return Vector2Distance(point, closestPoint);
+    }
+    
+    void edgeCollisionWithRadius(bool& collided, float dt, std::vector<Vector2>& vertices)
+    {
+      if(!collided)
+      {
+      size_t n{vertices.size()}; 
+      Vector2 next_pos = Vector2Add(m_coordinates, Vector2Scale(m_velocities, dt));
+        for (size_t i = 0; i< n; ++i)
+        {
+        float t_coll{};
+        float distance = PointToLineDistance(m_coordinates, vertices[i],vertices[(i + 1) % n], t_coll);
+        if (distance < m_radius)
+        {
+          float displacement = m_radius- distance;
+          Vector2 edge = Vector2Subtract( vertices[(i + 1) % n] , vertices[i]);
+          Vector2 collisionPoint = Vector2Add(vertices[i], Vector2Scale(edge, t_coll));
+          Vector2 perpendicular = { -edge.y, edge.x };
+          Vector2 normal = Vector2Normalize(perpendicular);
+          Vector2 collisionNormal = Vector2Normalize(Vector2Subtract(m_coordinates, collisionPoint));
+          m_coordinates = Vector2Add(m_coordinates, Vector2Scale(collisionNormal, displacement));
+          m_velocities = Vector2Subtract(m_velocities, Vector2Scale(normal, 2 * Vector2DotProduct(m_velocities, normal)));
+          collided = true;
+          break;
+        }
+        }  
+      } 
+    }    
 
     bool Vec2checkIntersection (float dt, const Vector2& Q1,const Vector2& Q2)
     {

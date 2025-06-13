@@ -161,7 +161,7 @@ CMakeFiles/convex_billiard.dir/src/simulation.cpp.o: \
  /usr/include/c++/14/bits/basic_ios.tcc \
  /usr/include/c++/14/bits/ostream.tcc /usr/include/c++/14/istream \
  /usr/include/c++/14/bits/istream.tcc \
- /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/polygon.cpp \
+ /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/polygon.hpp \
  /usr/include/c++/14/cmath /usr/include/math.h \
  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
@@ -190,8 +190,8 @@ CMakeFiles/convex_billiard.dir/src/simulation.cpp.o: \
  /usr/include/c++/14/bits/stl_vector.h \
  /usr/include/c++/14/bits/stl_bvector.h \
  /usr/include/c++/14/bits/vector.tcc \
- /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/particle.cpp \
- /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/src/rng.cpp \
+ /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/particle.hpp \
+ /home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards/include/rng.hpp \
  /usr/include/c++/14/random /usr/include/c++/14/cstdint \
  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
