@@ -6,11 +6,14 @@
 class Particle
 {
   private:
-    const double m_limit_velocity{100.0};
     float m_radius;
     Vector2 m_coordinates;
     Vector2 m_velocities;
     Random_number_generator m_rng;
+    // limit parameters
+    const float m_limit_velocity{100.0f};
+    const float m_min_radius{2.0f};
+    const float m_max_radius{8.0f};
   public:
     Particle(Vector2 center, double apothem)
     { 
@@ -44,12 +47,11 @@ class Particle
       m_velocities.x = m_rng.getRNGinRangeDouble(-m_limit_velocity,+m_limit_velocity);
       m_velocities.y = m_rng.getRNGinRangeDouble(-m_limit_velocity,+m_limit_velocity);
     }
-    void randRadius() {m_radius = m_rng.getRNGinRangeDouble(2.0f, 6.0f);}
+    void randRadius() {m_radius = m_rng.getRNGinRangeDouble(m_min_radius, m_max_radius);}
     
     void update(float dt, std::vector<Vector2>& vertices , std::vector<Particle>& particles)
     {
       bool collided = false;
-      //edgeCollision(collided, dt, vertices);
       edgeCollisionWithRadius(collided, dt, vertices);
       vertexCollision(collided, dt, vertices);
       particlesElasticCollision(collided, dt, particles);
@@ -95,24 +97,6 @@ class Particle
       } 
     }    
 
-    bool Vec2checkIntersection (float dt, const Vector2& Q1,const Vector2& Q2)
-    {
-      // lines intersection is given by the condition
-      // P1 + t deltaP = Q1 + u deltaQ 
-      // this can happen only if d=Vector2CrossProduct(deltaP, deltaQ) != 0 (not parallel)
-      // Solving using Cramer Method
-      Vector2 P1 = m_coordinates;
-      Vector2 P2 = Vector2Add(m_coordinates, Vector2Scale(m_velocities, dt));
-      Vector2 deltaP=Vector2Subtract(P2,P1);
-      Vector2 deltaQ=Vector2Subtract(Q2,Q1);
-      Vector2 deltaPQ=Vector2Subtract(Q1,P1);
-      float denom = Vector2CrossProduct(deltaP, deltaQ);
-      if (denom == 0) {return false;}
-      float t = Vector2CrossProduct(deltaPQ, deltaQ) / denom;
-      float u = Vector2CrossProduct(deltaPQ, deltaP) / denom;
-      return t >= 0.00f && t <= 1.00f && u >= 0.00f && u <= 1.00f;
-    }
-
     void vertexCollision(bool& collided, float dt, std::vector<Vector2>& vertices )
     {
       if(!collided)
@@ -133,28 +117,7 @@ class Particle
         }
       }
     }
-        
-    void edgeCollision(bool& collided, float dt, std::vector<Vector2>& vertices)
-    {
-      if(!collided)
-      {
-      size_t n{vertices.size()}; 
-      Vector2 next_pos = Vector2Add(m_coordinates, Vector2Scale(m_velocities, dt));
-        for (size_t i = 0; i< n; ++i)
-        {
-        if (Vec2checkIntersection(dt, vertices[i],vertices[(i + 1) % n] ))
-        {
-          Vector2 edge = Vector2Subtract( vertices[(i + 1) % n] , vertices[i]);
-          Vector2 perpendicular = { -edge.y, edge.x };
-          Vector2 normal = Vector2Normalize(perpendicular);
-          m_velocities = Vector2Subtract(m_velocities, Vector2Scale(normal, 2 * Vector2DotProduct(m_velocities, normal)));
-          collided = true;
-          break;
-        }
-        }  
-      } 
-    }
-    
+            
     void particlesElasticCollision(bool& collided, float dt, std::vector<Particle>& particles)
     {
       if (!collided)
