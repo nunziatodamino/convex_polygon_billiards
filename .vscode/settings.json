@@ -54,5 +54,5 @@
     "typeinfo": "cpp",
     "variant": "cpp"
   },
-  "cmake.sourceDirectory": "/home/nunziato-damino/Documents/Github/scientific_programming_in_cpp/convex_polygon_billiards"
+  "cmake.sourceDirectory": "/home/nunziato-damino/Documents/Github/convex_polygon_billiards"
 }
