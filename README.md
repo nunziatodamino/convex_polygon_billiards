@@ -38,8 +38,8 @@ If you prefer to build the project yourself instead of using a precompiled [rele
 ### Build instructions
 
 ```bash
-# Clone the repository
-git clone https://github.com/nunziatodamino/convex_polygon_billiards.git
+# Clone the repository with the Raylib submodule
+git clone --recursive https://github.com/nunziatodamino/convex_polygon_billiards.git
 cd convex_polygon_billiards
 
 # Create and enter build directory
